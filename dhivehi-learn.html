@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhivehi – Learn with AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <span class="flag-emoji">🇲🇻</span>
+    <h1>Learn <span>Dhivehi</span></h1>
+    <div class="dhivehi-title">ދިވެހި ބަސް ދަސްކުރޭ</div>
+    <p>Your personal Dhivehi tutor, powered by AI</p>
+    <div class="streak-badge">🔥 <span id="streakCount">0</span> correct today</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('phrasebook', this)">📖 Phrases</button>
+    <button class="tab" onclick="showTab('quiz', this)">⚡ Quiz</button>
+    <button class="tab" onclick="showTab('tutor', this)">🤖 AI Tutor</button>
+    <button class="tab" onclick="showTab('script', this)">✍️ Script</button>
+  </div>
+
+  <!-- PHRASEBOOK -->
+  <div id="phrasebook" class="section">
+    <div class="card">
+      <div class="card-title"><span class="icon">🌊</span> Essential Phrases</div>
+      <div class="category-chips">
+        <button class="chip active" onclick="filterCategory('all', this)">All</button>
+        <button class="chip" onclick="filterCategory('greetings', this)">Greetings</button>
+        <button class="chip" onclick="filterCategory('love', this)">Love</button>
+        <button class="chip" onclick="filterCategory('daily', this)">Daily</button>
+        <button class="chip" onclick="filterCategory('questions', this)">Questions</button>
+        <button class="chip" onclick="filterCategory('food', this)">Food</button>
+        <button class="chip" onclick="filterCategory('numbers', this)">Numbers</button>
+        <button class="chip" onclick="filterCategory('travel', this)">Travel</button>
+        <button class="chip" onclick="filterCategory('emotions', this)">Emotions</button>
+        <button class="chip" onclick="filterCategory('family', this)">Family</button>
+      </div>
+      <div class="phrase-grid" id="phraseGrid"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="section hidden">
+    <div class="card">
+      <div class="score-bar">
+        <div class="score-item">
+          <div class="score-value" id="correctCount">0</div>
+          <div class="score-label">Correct</div>
+        </div>
+        <div class="score-item">
+          <div class="score-value" id="questionNum">1</div>
+          <div class="score-label">Question</div>
+        </div>
+        <div class="score-item">
+          <div class="score-value" id="streakNum">0</div>
+          <div class="score-label">Streak 🔥</div>
+        </div>
+      </div>
+      <div class="progress-dots" id="progressDots"></div>
+      <div id="quizContent"></div>
+    </div>
+  </div>
+
+  <!-- AI TUTOR -->
+  <div id="tutor" class="section hidden">
+    <div class="card">
+      <div class="card-title"><span class="icon">🤖</span> AI Dhivehi Tutor</div>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-bottom:14px;">Ask anything about Dhivehi — pronunciation, grammar, custom phrases, or how to say something to your partner.</p>
+      <div class="chat-area" id="chatArea">
+        <div class="msg ai">
+          <div class="label">Tutor</div>
+          Assalamu alaikum! 👋 I'm your Dhivehi tutor. I can teach you phrases, explain the script (Thaana), help with pronunciation, or translate anything you want to say. What would you like to learn first?
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" placeholder='e.g. "How do I say I love you?" or "teach me numbers"' onkeydown="if(event.key==='Enter') sendChat()">
+        <button class="send-btn" id="sendBtn" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <div id="script" class="section hidden">
+    <div class="card">
+      <div class="card-title"><span class="icon">✍️</span> The Thaana Script</div>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-bottom:16px;">Dhivehi is written right-to-left in Thaana script. Here are the basic letters — tap each to hear the name.</p>
+      <div id="scriptGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;"></div>
+    </div>
+    <div class="card" style="margin-top:8px">
+      <div class="card-title"><span class="icon">◌</span> Vowel Marks (Fili)</div>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-bottom:16px;">Vowels in Thaana are written as diacritics above or below a consonant — never as standalone letters. Shown here on <strong style="color:var(--gold)">އ</strong> (Alifu), the neutral vowel carrier. Tap any to hear the sound.</p>
+      <div id="diacriticsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
+    </div>
+    <div class="card" style="margin-top:8px">
+      <div class="card-title"><span class="icon">💡</span> Key Facts about Dhivehi</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="fact-item">
+          <div class="fact-label">SCRIPT DIRECTION</div>
+          <div class="fact-text">Written right-to-left, like Arabic. The script is called <strong style="color:var(--gold)">Thaana</strong> (ތާނަ)</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">PRONUNCIATION TIP</div>
+          <div class="fact-text">Vowels are written as diacritics (marks) above or below consonants, similar to Arabic harakat</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">FORMAL vs INFORMAL</div>
+          <div class="fact-text">Dhivehi has formal and informal registers. For conversation with a partner, the informal is most natural</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-label">LOANWORDS</div>
+          <div class="fact-text">Many English, Arabic, and Hindi words are used in modern Dhivehi — you'll recognise more than you think!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="phrases.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
