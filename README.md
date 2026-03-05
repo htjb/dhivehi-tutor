@@ -1,5 +1,7 @@
 # 🇲🇻 Dhivehi Tutor
 
+![Dhivehi Tutor](homepage.png)
+
 A personal Dhivehi language learning app, built for anyone wanting to connect with a Maldivian partner or just explore a beautiful and under-resourced language. Think of it as a lightweight Duolingo for Dhivehi — with an AI tutor powered by Claude.
 
 ---
